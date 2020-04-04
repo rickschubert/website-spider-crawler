@@ -6,16 +6,18 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	//"github.com/rickschubert/html-link-parser/htmllinkextractor"
+	"github.com/rickschubert/website-spider-crawler/joncalhounlinkparser"
 )
+
+var linksVisited []joncalhounlinkparser.Link
 
 func main() {
 	fmt.Println("The website crawler has started!")
 	baseUrl := getBaseUrlFromCLIFlags()
 	fmt.Println("baseUrl", baseUrl)
 	htmlContent := getHTMLContent(baseUrl)
-	fmt.Println("htmlContent", trimToFirstOneHundredCharacters(htmlContent))
-	//extractedStuff := htmllinkextractor.ExtractLinks("")
+	linksFromHTML := joncalhounlinkparser.Parse(htmlContent)
+	fmt.Println(linksFromHTML)
 }
 
 func getBaseUrlFromCLIFlags() string {
